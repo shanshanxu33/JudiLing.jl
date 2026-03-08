@@ -301,8 +301,12 @@ Given a list of string tokens return a list of all n-grams for these tokens.
 """
 function make_ngrams(tokens, grams, keep_sep, sep_token, start_end_token)
     tokens = collect(map(string, tokens))  
-    new_tokens = push!(pushfirst!(tokens, start_end_token), start_end_token)
-
+        
+    if start_end_token == ""
+        new_tokens = tokens
+    else
+        new_tokens = push!(pushfirst!(copy(tokens), start_end_token), start_end_token)
+    end
     ngrams_results = []
 
     for g in grams
